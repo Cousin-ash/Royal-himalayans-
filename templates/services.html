@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Services | Royal Himalayans{% endblock %}
+
+{% block content %}
+<!-- Page heading for the services list page -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Services</h1>
+        <p>Select a car accessory service and book an installation.</p>
+    </div>
+</section>
+
+<!-- Full list of services pulled from the SQLite database -->
+<section class="section container">
+    <div class="service-list-grid">
+        {% for service in services %}
+            <article class="service-list-card">
+                <img src="{{ url_for('static', filename='img/icons/' + service.image_filename) }}" alt="{{ service.name }}">
+
+                <div>
+                    <h2>{{ service.name }}</h2>
+                    <p>{{ service.description }}</p>
+                    <p class="price">From ${{ service.price_from }}</p>
+
+                    <!-- Button opens the service detail page with the booking form -->
+                    <a class="btn btn-red" href="{{ url_for('service_detail', slug=service.slug) }}">View Details</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

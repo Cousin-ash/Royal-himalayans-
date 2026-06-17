@@ -1,0 +1,39 @@
+<!-- Reusable admin bookings table used on dashboard and bookings pages -->
+<div class="table-wrap">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Reference</th>
+                <th>Customer Name</th>
+                <th>Service</th>
+                <th>Car Model</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.booking_ref }}</td>
+                    <td>{{ booking.customer_name }}</td>
+                    <td>{{ booking.service_name }}</td>
+                    <td>{{ booking.car_model }}</td>
+                    <td>{{ booking.preferred_date }}</td>
+
+                    <!-- Status class changes badge colour based on Pending, Confirmed or Completed -->
+                    <td><span class="status status-{{ booking.status|lower }}">{{ booking.status }}</span></td>
+
+                    <!-- Opens the admin edit page for this booking -->
+                    <td><a class="icon-btn" href="{{ url_for('admin_booking_detail', booking_id=booking.id) }}">View/Edit</a></td>
+                </tr>
+            {% else %}
+                <!-- Jinja else runs when there are no bookings in the list -->
+                <tr><td colspan="8">No bookings found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

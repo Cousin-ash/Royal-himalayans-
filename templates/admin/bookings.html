@@ -1,0 +1,25 @@
+{% extends 'admin/admin_base.html' %}
+{% block title %}Bookings | Admin{% endblock %}
+
+{% block content %}
+<!-- Page heading and booking search form -->
+<div class="admin-card-head page-head">
+    <h1>Bookings</h1>
+
+    <!-- Search query is sent using GET so it appears in the URL -->
+    <form class="search-form" method="get" action="{{ url_for('admin_bookings') }}">
+        <input name="q" value="{{ search }}" placeholder="Search bookings...">
+        <button type="submit">Search</button>
+
+        <!-- Clear link only appears when a search is active -->
+        {% if search %}
+            <a href="{{ url_for('admin_bookings') }}">Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+<!-- Booking records are shown using a reusable table partial -->
+<section class="admin-card">
+    {% include 'admin/partials/bookings_table.html' %}
+</section>
+{% endblock %}

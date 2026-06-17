@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Contact | Royal Himalayans{% endblock %}
+
+{% block content %}
+<!-- Contact page heading -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Contact</h1>
+        <p>Send an inquiry and the team will respond as soon as possible.</p>
+    </div>
+</section>
+
+<!-- Contact layout has business information beside the inquiry form -->
+<section class="section container contact-layout">
+    <div class="contact-card">
+        <h2>Business Information</h2>
+        <p><strong>Location:</strong> Sydney, NSW</p>
+        <p><strong>Services:</strong> Car accessory installation and booking support.</p>
+        <p><strong>Hours:</strong> Monday to Saturday by appointment.</p>
+    </div>
+
+    <!-- Inquiry form submits to the contact route and stores messages in the inquiries table -->
+    <form class="contact-form" method="post" action="{{ url_for('contact') }}" novalidate>
+        <label for="name">Name *</label>
+        <input id="name" name="name" required maxlength="80" value="{{ form_data.get('name', '') }}">
+
+        <label for="email">Email *</label>
+        <input id="email" type="email" name="email" required maxlength="120" value="{{ form_data.get('email', '') }}">
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" maxlength="20" value="{{ form_data.get('phone', '') }}">
+
+        <label for="message">Message *</label>
+        <textarea id="message" name="message" required maxlength="1000">{{ form_data.get('message', '') }}</textarea>
+
+        <button class="btn btn-red" type="submit">Submit Inquiry</button>
+    </form>
+</section>
+{% endblock %}
+

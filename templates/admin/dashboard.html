@@ -1,0 +1,24 @@
+{% extends 'admin/admin_base.html' %}
+{% block title %}Dashboard | Admin{% endblock %}
+
+{% block content %}
+<h1>Dashboard Overview</h1>
+
+<!-- Stat cards summarise booking statuses for quick admin monitoring -->
+<section class="stat-grid">
+    <article class="stat-card"><span>▣</span><p>Total Bookings</p><strong>{{ stats.total }}</strong><small>All bookings</small></article>
+    <article class="stat-card"><span>!</span><p>Pending</p><strong>{{ stats.pending }}</strong><small>Awaiting confirmation</small></article>
+    <article class="stat-card"><span>✓</span><p>Confirmed</p><strong>{{ stats.confirmed }}</strong><small>Confirmed bookings</small></article>
+    <article class="stat-card"><span>☑</span><p>Completed</p><strong>{{ stats.completed }}</strong><small>Completed bookings</small></article>
+</section>
+
+<!-- Recent bookings table reuses the same table partial as the bookings page -->
+<section class="admin-card">
+    <div class="admin-card-head">
+        <h2>Recent Bookings</h2>
+        <a class="btn btn-small" href="{{ url_for('admin_bookings') }}">View All</a>
+    </div>
+
+    {% include 'admin/partials/bookings_table.html' %}
+</section>
+{% endblock %}

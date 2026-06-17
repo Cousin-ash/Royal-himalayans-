@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Basic page setup for mobile responsiveness and browser rendering -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Theme colour used by some browsers/PWA install screens -->
+    <meta name="theme-color" content="#e50914">
+
+    <!-- Page title can be changed by child templates using the title block -->
+    <title>{% block title %}Royal Himalayans{% endblock %}</title>
+
+    <!-- PWA manifest links the app name, icons, theme colour and install settings -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+
+    <!-- Browser tab icon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/icons/icon-192.png') }}">
+
+    <!-- Main stylesheet used by both public and admin pages -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Main JavaScript file, loaded after HTML parsing using defer -->
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+<body>
+    <!-- Public website header and navigation bar -->
+    <header class="site-header">
+        <nav class="navbar container">
+            <!-- Logo links back to the homepage -->
+            <a class="brand" href="{{ url_for('index') }}" aria-label="Royal Himalayans home">
+                <img src="{{ url_for('static', filename='img/icons/logo.png') }}" alt="Royal Himalayans logo">
+            </a>
+
+            <!-- Mobile navigation button controlled by app.js -->
+            <button class="nav-toggle" type="button" aria-label="Open navigation">☰</button>
+
+            <!-- Main public navigation links -->
+            <ul class="nav-links">
+                <li><a class="{{ 'active' if request.endpoint == 'index' else '' }}" href="{{ url_for('index') }}">Home</a></li>
+                <li><a class="{{ 'active' if request.endpoint in ['services', 'service_detail'] else '' }}" href="{{ url_for('services') }}">Services</a></li>
+                <li><a class="{{ 'active' if request.endpoint == 'about' else '' }}" href="{{ url_for('about') }}">About Us</a></li>
+                <li><a href="{{ url_for('index') }}#gallery">Gallery</a></li>
+                <li><a class="{{ 'active' if request.endpoint == 'contact' else '' }}" href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a class="btn btn-red" href="{{ url_for('services') }}">Book Now</a></li>
+                <li><a class="btn btn-outline" href="{{ url_for('admin_index') }}">🔒 Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main page content is inserted by child templates -->
+    <main>
+        <!-- Flash messages show success/error feedback from Flask -->
+        {% include 'partials/flash.html' ignore missing %}
+
+        <!-- Each page fills this block with its own content -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Public footer shown on all public pages -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <img class="footer-logo" src="{{ url_for('static', filename='img/icons/logo.png') }}" alt="Royal Himalayans logo">
+                <p>Professional car accessory installation in Sydney.</p>
+            </div>
+
+            <div>
+                <h3>Services</h3>
+                <p>Android Head Units, Apple CarPlay, Android Auto, Dash Cams and Parking Sensors.</p>
+            </div>
+
+            <div>
+                <h3>Support</h3>
+                <p><a href="{{ url_for('contact') }}">Contact us</a> for installation questions and booking support.</p>
+            </div>
+        </div>
+
+        <!-- Current year is injected from Flask context_processor -->
+        <p class="copyright">© {{ current_year }} Royal Himalayans. All rights reserved.</p>
+    </footer>
+</body>
+</html>

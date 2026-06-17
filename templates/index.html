@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Royal Himalayans | Premium Car Accessories{% endblock %}
+
+{% block content %}
+<!-- Homepage hero section with main marketing message and call-to-action buttons -->
+<section class="hero">
+    <div class="hero-overlay">
+        <div class="container hero-content">
+            <h1>Upgrade Your Drive</h1>
+            <h2>Premium Car Accessories<br>Professional Installation</h2>
+            <p>We specialise in Android Head Units, Apple CarPlay, Android Auto, Dash Cams and Parking Sensors.</p>
+
+            <div class="hero-actions">
+                <a class="btn btn-red" href="{{ url_for('services') }}">Book Your Installation</a>
+                <a class="btn btn-outline-light" href="#services">View Services</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Service tiles are loaded dynamically from the services table -->
+<section id="services" class="section container">
+    <div class="section-title">
+        <span>Our Services</span>
+        <h2>Choose your upgrade</h2>
+    </div>
+
+    <div class="service-card-grid">
+        {% for service in services %}
+            <article class="service-card">
+                <!-- Each service image filename comes from the database seed data -->
+                <img src="{{ url_for('static', filename='img/icons/' + service.image_filename) }}" alt="{{ service.name }}">
+
+                <h3>{{ service.name }}</h3>
+                <p>{{ service.short_description }}</p>
+
+                <!-- Slug creates a clean URL such as /services/apple-carplay -->
+                <a href="{{ url_for('service_detail', slug=service.slug) }}">Learn More →</a>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Feature band highlights business benefits in a simple visual row -->
+<section class="feature-band">
+    <div class="container feature-grid">
+        <div class="feature-item"><span></span><strong>Professional Installation</strong><small>Expert technicians</small></div>
+        <div class="feature-item"><span></span><strong>Quality Products</strong><small>Trusted brands</small></div>
+        <div class="feature-item"><span></span><strong>Competitive Prices</strong><small>Best value guaranteed</small></div>
+        <div class="feature-item"><span></span><strong>Customer Support</strong><small>We're here to help</small></div>
+    </div>
+</section>
+
+<!-- Gallery section currently reuses service images as example images -->
+<section id="gallery" class="section container">
+    <div class="section-title">
+        <span>Gallery</span>
+        <h2>Installation examples</h2>
+    </div>
+        <div class="gallery-grid">
+            <img src="{{ url_for('static', filename='img/gallery/example-apple-carplay-1.png') }}" alt="Apple CarPlay installation example">
+            <img src="{{ url_for('static', filename='img/gallery/example-android-head-unit-1.png') }}" alt="Android head unit installation example">
+            <img src="{{ url_for('static', filename='img/gallery/example-dash-cam-1.png') }}" alt="Dash cam installation example">
+            <img src="{{ url_for('static', filename='img/gallery/example-parking-sensors-1.png') }}" alt="Parking sensors installation example">
+        </div>
+</section>
+{% endblock %}

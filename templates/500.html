@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Server Error | Royal Himalayans{% endblock %}
+
+{% block content %}
+<!-- Custom 500 page shown if the server has an unexpected error -->
+<section class="section container narrow">
+    <div class="error-card">
+        <h1>500</h1>
+        <p>Something went wrong. Please try again later.</p>
+        <a class="btn btn-red" href="{{ url_for('index') }}">Go Home</a>
+    </div>
+</section>
+{% endblock %}

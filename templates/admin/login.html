@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Login page metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Login | Royal Himalayans</title>
+
+    <!-- Shared PWA, CSS and JavaScript files -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+
+<body class="login-body">
+    <!-- Centered login screen for admin users -->
+    <main class="login-page">
+        <section class="login-card">
+            <img src="{{ url_for('static', filename='img/icons/logo.png') }}" alt="Royal Himalayans logo" class="login-logo">
+
+            <h1>Admin Login</h1>
+            <p>Please sign in to access the management system.</p>
+
+            <!-- Shows invalid login errors or logout messages -->
+            {% include 'partials/flash.html' ignore missing %}
+
+            <!-- Login form posts to Flask, where bcrypt checks the password hash -->
+            <form method="post" action="{{ url_for('admin_login') }}" novalidate>
+                <label for="username">Username</label>
+                <input id="username" name="username" required maxlength="50" placeholder="Enter username" autocomplete="username">
+
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" required placeholder="Enter password" autocomplete="current-password">
+
+                <button class="btn btn-red btn-block" type="submit">Login</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends 'admin/admin_base.html' %}
+{% block title %}Services | Admin{% endblock %}
+
+{% block content %}
+<h1>Services</h1>
+
+<!-- Read-only services table so the admin can view seeded service information -->
+<section class="admin-card table-wrap">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Service</th>
+                <th>Slug</th>
+                <th>Price From</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for service in services %}
+                <tr>
+                    <td>{{ service.id }}</td>
+                    <td>{{ service.name }}</td>
+                    <td>{{ service.slug }}</td>
+                    <td>${{ service.price_from }}</td>
+                    <td>{{ service.image_filename }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5">No services found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

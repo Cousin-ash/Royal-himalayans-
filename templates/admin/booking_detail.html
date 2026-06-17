@@ -1,0 +1,62 @@
+{% extends 'admin/admin_base.html' %}
+{% block title %}Booking {{ booking.booking_ref }} | Admin{% endblock %}
+
+{% block content %}
+<!-- Admin page for viewing and editing one booking -->
+<div class="page-head">
+    <h1>Booking {{ booking.booking_ref }}</h1>
+    <a class="btn btn-small" href="{{ url_for('admin_bookings') }}">Back to Bookings</a>
+</div>
+
+<section class="admin-card">
+    <!-- Form submits edited booking details back to the same Flask route -->
+    <form class="admin-form" method="post" action="{{ url_for('admin_booking_detail', booking_id=booking.id) }}" novalidate>
+        <div class="form-grid two">
+            <div>
+                <label for="customer_name">Customer Name *</label>
+                <input id="customer_name" name="customer_name" required maxlength="80" value="{{ booking.customer_name }}">
+            </div>
+
+            <div>
+                <label for="phone">Phone *</label>
+                <input id="phone" name="phone" required maxlength="20" value="{{ booking.phone }}">
+            </div>
+
+            <div>
+                <label for="car_model">Car Model *</label>
+                <input id="car_model" name="car_model" required maxlength="80" value="{{ booking.car_model }}">
+            </div>
+
+            <div>
+                <label for="preferred_date">Preferred Date *</label>
+                <input id="preferred_date" type="date" name="preferred_date" required value="{{ booking.preferred_date }}">
+            </div>
+
+            <div>
+                <label for="service_id">Service *</label>
+                <select id="service_id" name="service_id" required>
+                    {% for service in services %}
+                        <!-- Selected keeps the existing service chosen when the page loads -->
+                        <option value="{{ service.id }}" {% if service.id == booking.service_id %}selected{% endif %}>{{ service.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="status">Status *</label>
+                <select id="status" name="status" required>
+                    {% for status in status_options %}
+                        <!-- Admin can update booking workflow from Pending to Confirmed to Completed -->
+                        <option value="{{ status }}" {% if status == booking.status %}selected{% endif %}>{{ status }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" maxlength="500">{{ booking.notes or '' }}</textarea>
+
+        <button class="btn btn-red" type="submit">Save Changes</button>
+    </form>
+</section>
+{% endblock %}

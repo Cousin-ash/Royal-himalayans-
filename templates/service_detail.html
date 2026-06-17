@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}{{ service.name }} | Royal Himalayans{% endblock %}
+
+{% block content %}
+<!-- Two-column layout: service information on the left and booking form on the right -->
+<section class="section container detail-layout">
+    <article class="detail-card">
+        <!-- Breadcrumb helps the user return to the service list -->
+        <div class="breadcrumb"><a href="{{ url_for('services') }}">Services</a> › {{ service.name }}</div>
+
+        <img class="detail-image" src="{{ url_for('static', filename='img/icons/' + service.image_filename) }}" alt="{{ service.name }}">
+
+        <h1>{{ service.name }}</h1>
+        <p>{{ service.description }}</p>
+
+        <!-- Features are stored as one pipe-separated database string and displayed as a list -->
+        <ul class="tick-list">
+            {% for feature in service.features|features %}
+                <li>{{ feature }}</li>
+            {% endfor %}
+        </ul>
+
+        <p class="price large">From ${{ service.price_from }}</p>
+        <small>* Price may vary depending on vehicle model.</small>
+    </article>
+
+    <!-- Booking form submits to the Flask make_booking route -->
+    <aside class="booking-panel">
+        <h2>Book Your Installation</h2>
+
+        <form method="post" action="{{ url_for('make_booking', slug=service.slug) }}" novalidate>
+            <!-- Values are kept in form_data if validation fails, so the user does not retype everything -->
+            <label for="customer_name">Full Name *</label>
+            <input id="customer_name" name="customer_name" required maxlength="80" value="{{ form_data.get('customer_name', '') }}" placeholder="Enter your full name">
+
+            <label for="phone">Phone Number *</label>
+            <input id="phone" name="phone" required maxlength="20" value="{{ form_data.get('phone', '') }}" placeholder="Enter your phone number">
+
+            <label for="car_model">Car Model *</label>
+            <input id="car_model" name="car_model" required maxlength="80" value="{{ form_data.get('car_model', '') }}" placeholder="Enter your car model">
+
+            <label for="preferred_date">Preferred Date *</label>
+            <input id="preferred_date" type="date" name="preferred_date" required value="{{ form_data.get('preferred_date', '') }}">
+
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" maxlength="500" placeholder="Optional installation notes">{{ form_data.get('notes', '') }}</textarea>
+
+            <button class="btn btn-red btn-block" type="submit">Submit Booking</button>
+        </form>
+
+        <div class="info-box">ℹ️ You will receive a confirmation once your booking is submitted.</div>
+    </aside>
+</section>
+{% endblock %}

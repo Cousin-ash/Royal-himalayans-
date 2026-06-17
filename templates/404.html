@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Page Not Found | Royal Himalayans{% endblock %}
+
+{% block content %}
+<!-- Custom 404 page shown when a route or service does not exist -->
+<section class="section container narrow">
+    <div class="error-card">
+        <h1>404</h1>
+        <p>Page not found.</p>
+        <a class="btn btn-red" href="{{ url_for('index') }}">Go Home</a>
+    </div>
+</section>
+{% endblock %}

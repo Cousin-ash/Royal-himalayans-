@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Admin layout setup -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Admin pages can set their own title using this block -->
+    <title>{% block title %}Admin | Royal Himalayans{% endblock %}</title>
+
+    <!-- Admin also loads the PWA manifest and shared CSS/JS -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+</head>
+
+<body class="admin-body">
+    <!-- Admin sidebar navigation -->
+    <aside class="admin-sidebar">
+        <a class="admin-brand" href="{{ url_for('admin_dashboard') }}">
+            <img src="{{ url_for('static', filename='img/icons/logo.png') }}" alt="Royal Himalayans logo">
+        </a>
+
+        <!-- Active classes highlight the current admin page -->
+        <nav>
+            <a class="{{ 'active' if request.endpoint == 'admin_dashboard' else '' }}" href="{{ url_for('admin_dashboard') }}">⌂ Dashboard</a>
+            <a class="{{ 'active' if request.endpoint in ['admin_bookings', 'admin_booking_detail'] else '' }}" href="{{ url_for('admin_bookings') }}">▣ Bookings</a>
+            <a class="{{ 'active' if request.endpoint == 'admin_services' else '' }}" href="{{ url_for('admin_services') }}">◇ Services</a>
+            <a class="{{ 'active' if request.endpoint == 'admin_inquiries' else '' }}" href="{{ url_for('admin_inquiries') }}">✉ Inquiries</a>
+            <a href="{{ url_for('index') }}">↗ Public Site</a>
+            <a href="{{ url_for('admin_logout') }}">⇱ Logout</a>
+        </nav>
+    </aside>
+
+    <!-- Main admin content area -->
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <!-- Mobile sidebar button controlled by app.js -->
+            <button class="admin-menu" type="button">☰</button>
+
+            <!-- Username is injected from the Flask session -->
+            <span class="admin-user">👤 {{ admin_username or 'Admin' }}</span>
+        </header>
+
+        <!-- Reusable flash messages -->
+        {% include 'partials/flash.html' ignore missing %}
+
+        <main class="admin-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
+
